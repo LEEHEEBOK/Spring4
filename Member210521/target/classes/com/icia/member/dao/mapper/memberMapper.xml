@@ -4,16 +4,23 @@
  
  <mapper namespace="mm"> 
 	<insert id="memberjoin" parameterType="memberdto">
-		INSERT INTO MEMBER210521(MID, MPASSWORD, MNAME, MEMAIL) VALUES(#{mid}, #{mpassword}, #{mname}, #{memail})
+		INSERT INTO MEMBER210525(MID, MPASSWORD, MNAME, MEMAIL) VALUES(#{mid}, #{mpassword}, #{mname}, #{memail})
 	</insert>
 	
 	<select id="memberlist" resultType="memberdto">
-		SELECT * FROM MEMBER210521 ORDER BY MID ASC
+		SELECT * FROM MEMBER210525 ORDER BY MID ASC
 	</select>
 	
 	<select id="memberview" parameterType="String" resultType="memberdto">
-		SELECT * FROM MEMBER210521 WHERE MID=#{mid}
+		SELECT * FROM MEMBER210525 WHERE MID=#{mid}
 	</select>
 	
+	<select id="memberlogin" parameterType="memberdto" resultType="String">
+		SELECT MID FROM MEMBER210525 WHERE MID=#{mid} AND MPASSWORD=#{mpassword}
+	</select>
+	
+	<select id="memberupdate" parameterType="String" resultType="memberdto">
+		SELECT *FROM MEMBER210525 WHERE MID=#{loginId}
+	</select>
  </mapper>
  

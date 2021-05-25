@@ -67,43 +67,60 @@ public class MemberController {
 		mav = ms.memberView(mid);
 		return mav;
 	}
-	//로그인 화면 호출 메소드
-	@RequestMapping(value="/loginpage")
-		public String loginpage() {
-		
-		return "memberlogin";
-	} 
 	
-	//로그인 처리 메소드
-	@RequestMapping(value = "/login")
-		public ModelAndView memberLogin(@ModelAttribute MemberDTO member) {
-			
-//		mav = ms.memberlogin(member);
+	// 로그인 화면 출력 메소드
+	@RequestMapping(value="/loginpage")
+	public String loginPage() {
+		return "memberlogin";
+	}
+	
+	// 로그인 처리 메소드 
+	@RequestMapping(value="/login")
+	public ModelAndView memberLogin(@ModelAttribute MemberDTO member) {
+		// member 객체에는 memberlogin.jsp 에서 입력한 mid, mpassword 값만 담겨있음. 
+		System.out.println("login 메소드"+member.toString());
+		mav = ms.memberLogin(member);
 		return mav;
 	}
-	//로그아웃 처리 메소드
-	@RequestMapping(value = "/logout")
-		public String logout() {
+	
+	// 로그아웃 처리 메소드 
+	@RequestMapping(value="/logout")
+	public String logout() {
+		// 로그아웃은 세션에 저장된 내용을 지운다는 개념 
 		session.invalidate();
 		return "home";
 	}
 	
-	//회원정보 수정 요청 메소드
-	@RequestMapping(value = "/memberupdate")
-		public ModelAndView update() {
-		mav = ms.update();	
+	// 회원정보 수정 요청 메소드 
+	@RequestMapping(value="/memberupdate")
+	public ModelAndView update() {
+		mav = ms.update();
+		
 		return mav;
 	}
 	
+	// 회원정보 수정 처리 메소드 
+	@RequestMapping(value="/updateprocess")
+	public ModelAndView updateProcess(@ModelAttribute MemberDTO member) {
+		mav = ms.updateProcess(member);
+		return mav;
+	}
 	
-	@RequestMapping(value = "/memberdelete")
-	public ModelAndView memberdelete(@RequestParam("mid") String mid) {
-		mav = ms.memberdelete(mid);
+	// 회원삭제 처리 메소드
+	@RequestMapping(value="/memberdelete")
+	public ModelAndView memberDelete(@RequestParam("mid") String mid) {
+		mav = ms.memberDelete(mid);
 		return mav;
 	}
 	
 	
 }
+
+
+
+
+
+
 
 
 

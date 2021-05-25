@@ -2,6 +2,8 @@ package com.icia.member.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +18,9 @@ public class MemberService {
 	private MemberDAO mdao;
 	
 	private ModelAndView mav;
+	
+	@Autowired
+	private HttpSession session;
 	
 	public ModelAndView memberJoin(MemberDTO member) {
 		mav = new ModelAndView();
@@ -58,7 +63,46 @@ public class MemberService {
 		
 		return mav;
 	}
+	
+	public ModelAndView memberLogin(MemberDTO member) {
+		/*
+		 *membelogin jsp에서 입력한 아이디,비번이  db에 같은지 확인 
+		 * */
+		mav = new ModelAndView();
+		String loginId = mdao.memberLogin(member);
+		
+		//login 값이 있다면 아이디, 비번이 모두 맞았다는 것이고, (로그인 성공으로 처리)
+		//login 값이 없다면 틀렸다는 것으로 처리
+		
+		if (loginId !=null) {
+			session.setAttribute("loginMember", loginId);
+			mav.setViewName("membermain");
+		} else {
+			mav.setViewName("memberlogin");
+		}
+		
+		return mav;
+	}
+	
+	public ModelAndView update(){
+		mav = new ModelAndView();
+		
+		String loginId = (String) session.getAttribute("loginMember");
+		MemberDTO memberUpdate = mdao.memberView(loginId);
+		mav.addObject("member", memberUpdate);
+		mav.setViewName("memberUodate");
+		return mav;
+	}
 
+	public ModelAndView memberdelete(String mid) {
+		mav = new ModelAndView();
+		mdao.memberdelete;
+		mav.setViewName("memberlist");
+		return mav;
+	}
+	
+	
+	
 }
 
 

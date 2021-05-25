@@ -5,14 +5,12 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.icia.member.dto.MemberDTO;
 
 @Repository
 public class MemberDAO {
 
-	
 	@Autowired
 	private SqlSessionTemplate sql;
 	
@@ -28,19 +26,34 @@ public class MemberDAO {
 	public MemberDTO memberView(String mid) {
 		return sql.selectOne("mm.memberview", mid);
 	}
-	
+
 	public String memberLogin(MemberDTO member) {
-		return sql.selectOne("mm.memberLogin", member);
+		return sql.selectOne("mm.memberlogin", member);
 	}
-	
+
 	public MemberDTO update(String loginId) {
 		return sql.selectOne("mm.memberupdate", loginId);
 	}
 
-	public void memberdelete(String mid) {
-		
+	public int updateProcess(MemberDTO member) {
+		return sql.update("mm.updateprocess", member);
 	}
+
+	public void memberDelete(String mid) {
+		sql.delete("mm.memberdelete", mid);
+	}
+
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

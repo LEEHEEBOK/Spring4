@@ -15,6 +15,9 @@
 </head>
 <body>
 	<h2>memberlist.jsp</h2>
+	
+	로그인아이디: ${sessionScope.loginMember} <br>
+	
 	<table>
 		<tr>
 			<th>아이디</th>
@@ -34,17 +37,20 @@
 				<td><a href="memberview?mid=${member.mid}">조회</a>
 				<!-- http://localhost:8081/member/memberview?mid=aa
 						memberview 라는 주소를 요청하면서 mid 파라미터에 aa를 담아서 간다  -->
-				<td><button onclick="delefn('${member.mid}')">삭제</button>		
+				<td><button onclick="deletefn('${member.mid}')">삭제</button>
 			</tr>
 		</c:forEach>
+		
+		
 	</table>
-	<script> 
+	<script>
 		function deletefn(id){
 			console.log('삭제할아이디'+id);
-			location.href ="memberdelete?mid" +id;
-			//location.href ="memberdelete?mid=id";	(x)
-		
+			location.href="memberdelete?mid="+id;
+			// location.href="memberdelete?mid=id";(x)
 		}
 	</script>
+	
+	
 </body>
 </html>
